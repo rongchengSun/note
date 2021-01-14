@@ -78,6 +78,7 @@ Java运行环境(Java Runtime Environment)：Java运行环境
 
 
 -------------------------------------三、面向对象-----------------------------------------
+
 类组成部分
 	静态属性：static开头定义的属性
 	静态方法快：static{}代码块
@@ -100,11 +101,11 @@ Java运行环境(Java Runtime Environment)：Java运行环境
 	父类的引用指向子类对象
 
 组合和继承区别
-	特征			组合 			继承
-	关系 		has-a 			is-a
-	耦合度 		松耦合			紧耦合
-	是否多态		不具备和向上转型	多态基础，可以实现向上转型
-	时期			运行期绑定		编译器绑定
+	特征		  组合			 继承
+	关系		  has-a			   is-a
+	耦合度		 松耦合			紧耦合
+	是否多态		不具备和向上转型	   多态基础，可以实现向上转型
+	时期		  运行期绑定		       编译器绑定
 
 向上转型
 	通过子类对象（小范围）转化为父类对象(大范围)，自动完成，不用强制
@@ -133,4 +134,5 @@ Exception组成：
 	RuntimeException
 		ArrayIndexOutOfBoundsExceptions：数组越界异常
 		NullPointerException
+
  

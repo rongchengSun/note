@@ -2,9 +2,9 @@ java 知识点总结
 -------------------------------------一、Java概念-----------------------------------------
 Java组成：编程语言、计算平台
 
-Java SE(J2SE)(Java2 Platform Standard Edition, Java平台标准版) 
-Java EE(J2EE)(Java2 Platform, Enterprise Edition, Java平台企业版)
-Java ME(J2ME)(Java2 Platform Micro Edition, Java平台微型版)
+Java SE(J2SE)(Java2 Platform Standard Edition， Java平台标准版) 
+Java EE(J2EE)(Java2 Platform， Enterprise Edition， Java平台企业版)
+Java ME(J2ME)(Java2 Platform Micro Edition， Java平台微型版)
 
 Java特点：面向对象（Object Oriented）的编程语言
 
@@ -33,7 +33,7 @@ Java特点：面向对象（Object Oriented）的编程语言
 	3.编译+解释执行：程序先被编译成字节码文件，然后字节码被解释器解释执行
 
 程序执行步骤
-	java代码→字节码(bytecode,javac编译器编译)→机器代码(JVM内嵌解释器将字节码转为机器代码)
+	java代码→字节码(bytecode，javac编译器编译)→机器代码(JVM内嵌解释器将字节码转为机器代码)
 
 JDK(Java Development Kit):Java开发标准工具包，包含JRE
 
@@ -100,11 +100,11 @@ Java运行环境(Java Runtime Environment)：Java运行环境
 	父类的引用指向子类对象
 
 组合和继承区别
-	特征		 组合 		      继承
-	关系 		 has-a 			is-a
-	耦合度		松耦合		     紧耦合
-	是否多态	       不具备和向上转型		多态基础，可以实现向上转型
-	时期		运行期绑定		    编译器绑定
+	特征        组合               继承
+	关系        has-a             is-a
+	耦合度      松耦合             紧耦合
+	是否多态    不具备和向上转型    多态基础，可以实现向上转型
+	时期        运行期绑定         编译器绑定
 
 向上转型
 	通过子类对象（小范围）转化为父类对象(大范围)，自动完成，不用强制
@@ -160,8 +160,8 @@ Java内存模型组成部分
 线程私有
 	表示各个线程之间互不影响，独立存储的内存区域
 
-JVM：Java Virtual Machine,Java语言解释器，负责内存的分配（堆栈分配）、回收（GC）、解析class为硬件运行的机器码
-JMM：Java Memory Model,定义了JVM在计算机内存（RAM）中的工作方式，线程之间内存刷新的状态，是隶属于JVM的
+JVM：Java Virtual Machine，Java语言解释器，负责内存的分配（堆栈分配）、回收（GC）、解析class为硬件运行的机器码
+JMM：Java Memory Model，定义了JVM在计算机内存（RAM）中的工作方式，线程之间内存刷新的状态，是隶属于JVM的
 
 
 -------------------------------------五、内部类-----------------------------------------
@@ -178,4 +178,131 @@ JMM：Java Memory Model,定义了JVM在计算机内存（RAM）中的工作方�
 
 
 -------------------------------------六、集合-----------------------------------------
+顶层接口
+	Iterable
+		实现此接口允许对象成为for-each循环的目标，是Java中的一种语法糖
+
+	Iterator
+		实现此接口能够创建一个轻量级的迭代器，用于安全的遍历元素，移除元素，添加元素
+		尽量使用迭代器进行元素的添加和删除
+
+	Collection
+		顶层接口，用来定义集合的约定
+	Collection三大接口
+		List：顶层接口，继承Collection，是ArrayList、LinkedList等集合元素父类
+		Set：和List同级，对add、equals、hashCode方法提供了额外的标准
+		Queue：用来在处理之前保持元素的访问次序，提供了额外的插入，读取，检查操作
+
+	SortedSet
+		继承于Set，使用Comparable对元素进行自然排序或者使用Comparator在创建时对元素提供定制的排序规则，set的迭代器将按照升序元素顺序遍历集合
+	Map
+		支持key-value的存储对象，key不可重复，每个键最多映射一个值。替代了Dictionary类，Dictionary是一个抽象类而不是接口
+
+ArrayList
+	实现List的可扩容数组（动态数组），基于数组实现的，非线程安全，扩容后，数组长度会增加50%
+	解决线程安全问题
+		Collections.synchronizedList(new ArrayList());
+	具有fail-fast快速失败机制，当迭代集合的过程中该集合的结构发生改变的时候，有可能会发生fail-fast，抛出ConcurrentModificationException
+
+Vactor
+	基于数组实现，线程安全，内部每个方法上锁，避免线程引起的安全性问题，因为这种同步方式需要的开销比较大，访问效率低于ArrayList，扩容长度后数组会增加一倍
+
+LinkList
+	双向链表，允许存储任何元素（包括null），非线程安全
+	操作都可以表现为双向性的，索引到链表的操作将遍历从头到尾，视哪个距离近为遍历顺序
+	解决线程安全问题
+		Collections.synchronizedList(new LinkList());
+
+Stack
+	堆栈是我们常说的先入先出（吃了吐）容器，集成了Vactor
+	提供了常用的push和pop操作，以及在栈顶peek方法，测试stack是否为空empty方法，寻找与栈顶距离的search方法
+	Deque<Integer> stack = new ArrayDeque<>();
+
+HashSet
+	Set实现类，由Hash表支持（实际上HashSet是HashMap的一个实例），不能保证集合的迭代顺序，允许null元素，非线程安全，支持fail-fast
+	解决线程安全问题
+		Collections.synchronizedSet();
+
+TreeSet
+	基于TreeMap的NavigableSet实现，自然排序或在创建的时候提供的Comparator进行排序，具体取决于构造函数，非线程安全，支持fail-fast
+	此实现为基本操作add，remove和contains提供了log(n)的时间成本
+	解决线程安全问题
+		Collections.synchronizedSortedSet(new TreeSet());
+
+LinkedHashSet
+	是Set接口的Hash表和LinkList的实现，链表定义了元素插入集合的顺序，如果元素重新插入，则插入顺序不会受影响，非线程安全，支持fail-fast
+	有两个影响其构成的参数：
+		初始容量和加载因子，定义与HashSet完全相同
+	选择过高的初始容量值的开销比HashSet小，因为LinkedHashSet的迭代次数不受容量影响
+	解决线程安全问题
+		Collections.synchronizedSet
+
+PriorityQueue
+	AbstractQueue实现类，优先级队列的元素根据自然排序或者通过构造函数时期Comparator排序，不允许有null，非线程安全，支持fail-fast
+	队列的头在某种意义上是指定顺序的最后一个元素，队列查找操作：poll，remove，peek和element访问队列头部元素
+	优先级队列是无限制的，但具有内部capacity，用于控制队列中储存元素的数组大小
+	解决线程安全问题
+		PriorityBlockingQueue
+
+HashMap
+	利用哈希表原理来储存元素的集合，允许空的key-value键值对，非线程安全，支持fail-fast
+	HashMap的实例有两个参数影响其性能：
+		初始容量和加载因子
+	解决线程安全问题
+		Collections.synchronizedMap(new HashMap());
+
+TreeMap
+	基于navigableMap实现的红黑树，这个map根据key自然排序存储，或者通过Comparator进行定制排序，非线程安全，支持fail-fast
+	TreeMap为containsKey，get，put，remove方法提供log(n)的时间开销
+	解决线程安全问题
+		SortedMap map = Collections.synchronizedSortedMap(new TreeMap());
+
+LinkedHashMap
+	是Map接口的Hash表和链表的实现，与HashMap不同之处在于它维护了贯穿了所有条目的双向链表，定义了遍历顺序，通常时插入map的顺序，非线程安全，支持fail-fast
+	提供一个特殊的LinkedHashMap(int,float,boolean)构造器来创建LinkedHashMap，其遍历顺序是最后一次访问的顺序
+	可以重写removeEldesEntry(Map.Entry)方法，以便在新映射添加到map时强制删除过期映射的策略
+	允许null元素，由于维护链表的额外开销，性能可能会低于HashMap（例外：LinkedHashMap的collection-view需要与map.size成正比，无论其容量如何）
+	解决线程安全问题
+		Map map = Collections.synchronizedMap(new LinkedHashMap());
+
+Hashtable
+	实现了一个哈希表，能够将键映射到值，任何非空对象都可以用作键或值，此实现类支持fail-fast
+
+IdentityHashMap
+	无序，非线程安全，支持fail-fast
+	解决线程安全问题
+		Collections.synchronizedMap(new IdentityHashMap());
+
+WeakHashMap
+	基于哈希表的Map基础实现，带有弱键。WeakHashMap中的entry当不再使用时会自动移除（给定key的映射的存在将不会阻止key被垃圾收集器丢弃）
+	支持null键和null值，不允许重复，支持faill-fast
+	WeakHashMap经常用作缓存
+
+Collections
+	不属于Java框架继承树上的内容，属于独立的分支，Collections是一个包装器，为集合框架提供某些功能实现，此类只包括静态方法实现或者返回collections
+
+	同步包装
+		同步包装器将自动同步（线程安全性）添加到任意集合
+
+	不可修改的包装
+		不可修改的包装器通过拦截修改集合的操作并抛出UnSupportedOperationException
+		应用场景
+			构建集合后使其不变。在这种情况下，最好不要去获取返回collection的引用，这样有利于保证不变性
+			允许某些客户端以只读的方式访问你的数据结构。保留对返回的collection的引用，但分发对包装器的引用。通过这种方式，客户可以查看但不能修改，同时保持完全访问权限
+		方法
+			public static Collection unmodifiableCollection(Collection<? extends T> c);
+			public static Set unmodifiableSet(Set<? extends T> s);
+			public static List unmodifiableList(List<? extends T> l);
+			public static Map<K,V> unmodifiableMap(Map<? extends K, ? extends V> m);
+			public static SortedSet unmodifiableSortedSet(SortedSet<? extends T> s);
+			public static SortedMap<K, V> unmodifiableSortedMap(SortedMap<? extends K, ? extends V> m);
+
+CopyOnWrite
+	写时复制的容器，往一个容器添加元素的时候，当前容器进行copy，复制出一个新的容器，然后新的容器添加元素，添加完成后，再将元容器的引用指向新容器（读写分离的思想）
+
+
+
+-------------------------------------七、泛型-----------------------------------------
+
+
 

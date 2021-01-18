@@ -331,3 +331,230 @@ CopyOnWrite
 
 
 
+-------------------------------------八、泛型-----------------------------------------
+泛型概念
+	一种参数化的集合，限制了你添加进集合的类型。泛型的本质是一种参数化类型，多态也可以看作泛型的机制。希望对象或者方法具有最广泛的表达能力
+
+应用场景
+	用泛型表示类：表示这个类类型
+	用泛型表示接口：泛型接口与泛型类的定义及使用基本相同
+	泛型方法：可以使用泛型表示方法
+	泛型通配符：类型通配符使用问号（?）表示，它的元素类型可以匹配任何类型
+
+上界通配符：<? extends classType> ：该通配符为classType的所有子类型。它表示的是任何类型都是classType类型的子类
+下界通配符：<? super classType>：该通配符为classType的所有超类型。它表示的是任何类型的父类都是classType
+
+-------------------------------------九、反射-----------------------------------------
+
+Java反射机制：
+	在程序运行过程中，对于任何一个类，都可以知道它的所有属性和方法。对于任意一个对象，都能够知道调用它的任意属性和方法，这种动态获取信息以及动态调用对象的功能称为Java语言的反射机制
+Java反射提供的一下这几个功能
+	在运行时判断任意一个对象所属的类
+	在运行时构造任意一个类的对象
+	在运行时判断任意一个类所有的成员变量和方法
+	在运行时任意调用一个对象的方法
+
+获取类型实例的方式
+	Class.forName(java.lang.Object)
+	Object.class
+	object.getClass()
+
+newInstance()
+	创建一个类的实例，代表这个类的对象
+	forName()方法对进行初始化，newInstance()方法对类进行实例化
+
+getClassLoader()
+	获取类加载器对象
+getTypeParameters()
+	按照声明的顺序获取对象的参数信息
+getPackage()
+	返回类的包
+getInterfaces()
+	获取当前类实现的类或接口，返回Class数组
+Cast
+	把对象转成代表类或是接口的对象
+asSubclass(Class cls)
+	把传递的类的对象转换成代表其子类的对象
+getClasses()
+	返回一个数组，数组中包含该类中所有类和接口的对象
+getDeclaredClasses()
+	返回一个数组，数组中包含数组中包含该类中所以类和接口类的对象
+getSimpleName()
+	获取类的名称
+
+getFields()
+	获取所有公有属性变量
+getField(String name)
+	获取某个公有属性变量
+getDeclaredFields()
+	获取所有属性变量
+getDeclaredField(String name)
+	获取某个属性变量
+
+getAnnotation(Class annotationClass)
+	返回该类中与参数类型匹配的公有注解对象
+getAnnotations()
+	返回该类所有的公有注解对象
+getDeclareAnnotations()
+	获取该类所有的注解对象
+getDeclareAnnotation(Class annotationClass)
+	返回该类中与参数类型匹配的所有注解对象
+
+getConstructors(Class...<?> parameterTypes)
+	获取该类中与参数类型匹配的公有构造方法
+getConstructors()
+	获取该类的所有公有构造方法
+getDeclaredConstructor(Class...<?> parameterTypes)
+	获取该类中与参数类型匹配的构造方法
+getDeclaredConstructors()
+	获取该类中所有构造方法
+
+getMethod(String name, Class...<?> parameterTypes)
+	获取该类某个公有方法
+getMethods()
+	获取该类所有公有方法
+getDeclaredMethod(String name, Class...<?> parameterTypes)
+	获取该类某个方法
+getDeclaredMethods()
+	获取该类所有方法
+
+Field
+	提供类或接口中单独字段的信息，以及对单独字段的动态访问
+Method
+	Invoke(Object obj, Object... args)：传递obcjet对象及参数调用该对象对应的方法
+ClassLoader
+	类装载器是用来把类（Class）装载进JVM的，ClassLoader使用的是双亲委托模型来搜索加载类的
+
+双亲委派模型
+	双亲委派模型要求除了顶层的启动类加载器外，其余类加载器都应当有自己的父类加载器
+	双亲委派模式中的父子关系并非通常所说的集成关系，而是采用组合关系来复用父类加载器的相关代码
+工作原理
+	如果一个类加载器收到了类加载请求，它不会自己先去加载，而是把这个请求委托给父类的加载器去执行，如果父类加载器还存在其父类加载器，则进一步向上委托，依次递归，请求最终将达到顶层的启动类加载器，如果父类加载器能完成类加载任务，就成功返回，倘若父类加载器无法完成此加载任务，子加载器才会尝试自己去加载
+优势
+	带有优先级层次关系，可以避免类的重复加载，当父类已经加载了该类时，就没有必要子ClassLoader再加载一次
+	防止核心API库被随意篡改
+
+
+-------------------------------------十、IO-----------------------------------------
+分类
+	字节流
+		InputStream
+			FileInputStream
+			FilterInputStream
+				BufferedInputStream
+				DataInputStream
+				PushbakInputStream
+			ObjectInputStream
+			PipedInputStream
+			SequenceInputStream
+			StringBufferInputStream
+			ByteArrayInputStream
+
+		OutputStream
+			FileOutputStream
+			FilterOutputStream
+				BufferedOutputStream
+				DataOutputStream
+				PrintStream
+			ObjectOutputStream
+			PipedOutputStream
+			ByteArrayOutputStream
+
+	字符流
+		Reader
+			BufferedReader
+			InputStreamReader
+				FileReader
+			StringReader
+			PipedReader
+			CharArrayReader
+			FilterReader
+				PushbackReader
+
+		Writer
+			BufferedWriter
+			OutputStreamWriter
+				FileWriter
+			PrinterWriter
+			StringWriter
+			PipedWriter
+			CharArrayWriter
+			FilterWriter
+
+
+IO操作对象
+	基本数据类型
+		DataInputStream
+		DataOutputStream
+
+	缓冲操作
+		BufferedInputStream
+		BufferedOutputStream
+		BufferedReader
+		BufferedWriter
+	打印
+		PrintStream
+		PrintWriter
+
+	对象序列化
+		ObjectInputStream
+		ObjectOutputSTream
+
+	转换
+		InputStreamReader
+		OutputStreamWriter
+
+	文件
+		FileInputStream
+		OutputStream
+		FileReader
+		FileWriter
+
+	数组
+		字节数组
+			ByteArrayInputStream
+			ByteArrayOutputStream
+		字符数组
+			CharArrayReader
+			CharArrayWriter
+
+	管道
+		PipedInputStream
+		PipedOutputStream
+		PipedReader
+		PipedWriter
+
+InputStream及其子类
+	FileInputStream 文件输入流：FileInputStream类创建一个能从文件读取字节的InputStream类
+	ByteArrayInputStream 字节数组输入流：把内存中的一个缓冲区作为InputStream使用
+	PipedInputStream 管道输入流：实现了pipe管道的概念，主要在线程中使用
+	SequenceInputStream 顺序输入流：把多个InputStream合并为一个InputStream
+	FilterInputStream 过滤输入流：其他输入流的包装
+	ObjectInputStream 反序列化输入流：将之前使用ObjectOutputStream序列化的原始数据恢复成对象，以流的方式读取对象
+	DataInputStream 数据输入流允许应用程序以与机器无关方式从底层输入流中读取基本Java数据类型
+	PushbackInputStream 推回输入流：缓存的一个新颖的用法是实现推回（pushback）。Pushback用于输入流允许字节被读取然后返回到流
+
+OutputStream及其子类
+	FileOutputStream 文件输出流：该类实现了一个输出流，其数据写入文件
+	ByteArrayOutputStream 字节数组输出流：该类实现了一个输出流，其数据被写入由byte数组充当的缓冲区，缓冲区会随着数据的不断写入二自动增长
+	PipedOutputStream 管道输出流：管道的输出流，是管道的发起端
+	ObjectOutputStream 基本类型输出流：该类将序列化的对象写入指定地方
+	FilterOutputStream 过滤输出流：其他输出流的包装类
+	PrintStream 打印流：通过PrintStream可以将文字打印到文件或者网络中
+	DataOutputStream 数据输出流：允许应用程序以与机器无关方式向底层输出流中写入Java数据类型
+
+Reader及其子类
+	FileReader 文件字符输入流：把文件转换为字符流读入
+	CharArrayReader 字符数组输入流：是一个把字符数组作为源的输入流的实现
+	BufferedReader 缓冲区输入流：BufferedReader类从字符输入流中读取文本并缓冲字符，以便有效的读取字符、数组和行
+	PushbackReader ：PushbackReader允许一个或多个字符被送回输入流
+	PipedReader 管道输入流：主要用来线程间通讯，不过这个可以用来传输字符
+
+Writer及其子类
+	FilerWriter 字符输出流：FileWriter创建一个可以写入文件的Writer类
+	CharArrayWriter 字符数组输出流：CharArrayWriter实现了以数组为目标的输出流
+	BufferedWriter 缓冲区输出区：BufferedWriter是一个增加了flush()方法的Writer。flush()方法可以用来确保数据缓冲器被写到了实际的输出流
+	PrintWriter：PrintStream的字符形式的版本
+	PipedWriter 管道输出流：线程间通讯，不过这个可以用来传输字符
+
+

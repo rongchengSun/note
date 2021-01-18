@@ -1,0 +1,44 @@
+Throwable
+	Java语言中所有错误(errors)和异常(exceptions)的父类，只有继承于Throwable的类或者其子类才能被抛出，或者带有@throw注解的类
+
+Throwable组成：
+	Error
+	Exception
+
+Exception组成：
+	RuntimeException
+	CheckedException
+
+常见异常及其分类
+	RuntimeException
+		ArrayIndexOutOfBoundsExceptions：数组越界异常
+		NullPointerException：空指针异常
+		IllegalArgumentException：非法参数异常
+		NegativeArraySizeException：数组长度为负异常
+		IllegalStateException：非法状态异常
+		CLassCastException：类型转换异常
+	UncheckedException
+		NoSuchFieldException：表示该类没有指定名称抛出来的异常
+		NoSuchMethodException：表示该类没有指定方法抛出来的异常
+		IllegalAccessException：不允许访问某个类的异常
+		CLassNotFoundException：类没有找到抛出来的异常
+
+Java内存模型组成部分
+	所有线程共享的数据区：方法区（Method Area）、堆（Heap）
+	线程隔离的数据区：虚拟机栈（VM Stack）、本地方法栈（Native Method Stack）、程序计数器（Program Counter Register）
+
+不会发生内存泄漏(OutOfMemoryError)的区域：
+	程序计数器（原理：控制着计算机指令的分支、循环、跳转、异常处理和线程恢复，并且程序计数器每个线程是私有的）
+内存泄漏：
+	虚拟机栈：
+		如果线程请求的栈深度大于虚拟机栈所允许的深度，会出现StackOverflowError
+		如果虚拟机动态扩展无法申请到足够的内存，会出现OutOfMemoryError
+	本地方法栈：同虚拟机栈
+	堆：如果堆中没有内存完成实例分配，并且堆无法扩展时，将抛出OutOfMemoryError
+	方法区：方法区无法满足内存需求时，将抛出OutOfMemoryError
+	
+线程私有
+	表示各个线程之间互不影响，独立存储的内存区域
+
+JVM：Java Virtual Machine，Java语言解释器，负责内存的分配（堆栈分配）、回收（GC）、解析class为硬件运行的机器码
+JMM：Java Memory Model，定义了JVM在计算机内存（RAM）中的工作方式，线程之间内存刷新的状态，是隶属于JVM的
